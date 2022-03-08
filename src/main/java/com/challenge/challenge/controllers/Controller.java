@@ -19,7 +19,7 @@ public class Controller {
     TextService service;
 
     @PostMapping("text")
-    public ResponseEntity<Object> create(@RequestBody CreateTextDTO payload) throws JsonProcessingException {
+    public ResponseEntity<Object> create(@RequestBody CreateTextDTO payload) {
         try {
             return ResponseEntity.ok(new CreateResponseDTO(UUID.randomUUID().toString(), "test"));
         } catch (Exception e) {
