@@ -33,9 +33,9 @@ public class Controller {
     }
 
     @GetMapping("text")
-    public ResponseEntity<Object> list() {
+    public ResponseEntity<Object> list(@RequestParam int chars, @RequestParam int page, @RequestParam int rpp) {
         try {
-            List<Text> result = service.list();
+            List<Text> result = service.list(chars, page, rpp);
             List<TextDTO> dtos = result.stream().map(TextDTO::new).collect(Collectors.toList());
 
             return ResponseEntity.ok(dtos);

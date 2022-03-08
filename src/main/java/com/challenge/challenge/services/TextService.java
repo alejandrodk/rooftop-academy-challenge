@@ -49,7 +49,7 @@ public class TextService {
         return new Text("", 1, new HashMap<>());
     }
 
-    public List<Text> list() {
+    public List<Text> list(Integer chars, Integer page, Integer rpp) {
         // TODO:
         return Collections.emptyList();
     }
