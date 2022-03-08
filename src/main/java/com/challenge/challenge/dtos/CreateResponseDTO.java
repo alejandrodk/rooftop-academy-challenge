@@ -6,6 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class CreateResponseDTO extends ResponseDTO {
-    private final String id;
+    private final int id;
     private final String url;
 }
