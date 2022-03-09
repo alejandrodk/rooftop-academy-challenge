@@ -1,14 +1,19 @@
 package com.challenge.challenge.services;
 
+import com.challenge.challenge.database.TextDAO;
 import com.challenge.challenge.dtos.CreateTextDTO;
 import com.challenge.challenge.models.Text;
 import com.challenge.challenge.utils.TextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class TextService {
+    @Autowired
+    TextDAO repository;
+
     private List<String> splitIntoSyllables(String text, int charts) {
         if (TextUtils.charsExceedsText(text, charts)) return Collections.singletonList(text);
 
@@ -42,38 +47,42 @@ public class TextService {
         );
     }
 
+    public String getHash(CreateTextDTO dto) {
+        return UUID.randomUUID().toString();
+    }
+
     private Text analyze(CreateTextDTO dto) {
         String normalizedText = TextUtils.normalize(dto.getText());
         int totalChars = TextUtils.getChars(dto);
 
-        String hash = UUID.randomUUID().toString();
+        String hash = this.getHash(dto);
         List<String> syllables = this.splitIntoSyllables(normalizedText, totalChars);
         HashMap<String, Integer> result = this.reduceResult(syllables);
+        String normalizedResult = TextUtils.encodeResult(result);
 
-        return new Text(hash, totalChars, result);
+        return new Text(hash, totalChars, normalizedResult);
     }
 
     public Text create(CreateTextDTO dto) {
         Text text = this.analyze(dto);
         TextUtils.validateProperties(text);
 
-        // TODO: persistir
-        text.setId(1);
-        return text;
+        return repository.create(text);
     }
 
-    public Text get(String id) {
-        // TODO:
-        return new Text("", 1, new HashMap<>());
+    public Text get(int id) {
+        return repository.get(id);
     }
 
     public List<Text> list(Integer chars, Integer page, Integer rpp) {
-        // TODO:
-        return Collections.emptyList();
+        return repository.list();
     }
 
-    public boolean delete(String id) {
-        // TODO:
-        return true;
+    public boolean delete(int id) {
+        return repository.delete(id);
+    }
+
+    public Text getFromHash(String hash) {
+        return repository.getByHash(hash);
     }
 }

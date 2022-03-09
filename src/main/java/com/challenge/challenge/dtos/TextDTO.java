@@ -1,6 +1,7 @@
 package com.challenge.challenge.dtos;
 
 import com.challenge.challenge.models.Text;
+import com.challenge.challenge.utils.TextUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -21,6 +22,6 @@ public class TextDTO {
         this.id = text.getId();
         this.hash = text.getHash();
         this.chars = text.getChars();
-        this.result = text.getResult();
+        this.result = TextUtils.decodedResult(text.getResult());
     }
 }
