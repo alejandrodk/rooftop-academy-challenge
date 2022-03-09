@@ -73,5 +73,9 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.10.0.pr2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:4.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.3.16" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.3.16" level="project" />
   </component>
 </module>
