@@ -38,4 +38,15 @@ public class TextUtils {
             } catch (IllegalAccessException ignore) {}
         }
     }
+
+    public static String mergeLettersFromIndex(String text, int from, int to) {
+      StringBuilder sb = new StringBuilder();
+      String[] split = text.split("");
+
+      for(int i = from; i <= to; i++) {
+          sb.append(split[i]);
+      }
+
+      return sb.toString();
+    };
 }

@@ -28,6 +28,7 @@ public class Controller {
 
             return ResponseEntity.ok(new CreateResponseDTO(result.getId(), String.format("/text/%s", result.getId())));
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(new ErrorResponseDTO(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }

@@ -5,23 +5,41 @@ import com.challenge.challenge.models.Text;
 import com.challenge.challenge.utils.TextUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class TextService {
     private List<String> splitIntoSyllables(String text, int charts) {
         if (TextUtils.charsExceedsText(text, charts)) return Collections.singletonList(text);
-        // TODO:
 
-        return Collections.emptyList();
+        String[] syllables = text.split("");
+        List<String> result = new ArrayList<>();
+
+        int lastIndex = 0;
+        boolean completed = false;
+
+        while (!completed) {
+            result.add(TextUtils.mergeLettersFromIndex(text, lastIndex, lastIndex + charts - 1));
+
+            lastIndex += 1;
+
+            if (lastIndex + charts - 1 == syllables.length) completed = true;
+        }
+
+        return result;
     }
 
     private HashMap<String, Integer> reduceResult(List<String> syllables) {
-        // TODO:
-        return new HashMap<>();
+        return syllables.stream().reduce(
+          new HashMap<String, Integer>(),
+                (acc, key) -> {
+                    acc.put(key, acc.containsKey(key) ? acc.get(key) + 1 : 1);
+                    return acc;
+                },
+                (acc1, acc2) -> {
+                    return acc1;
+                }
+        );
     }
 
     private Text analyze(CreateTextDTO dto) {
@@ -36,11 +54,11 @@ public class TextService {
     }
 
     public Text create(CreateTextDTO dto) {
-        // TODO:
         Text text = this.analyze(dto);
         TextUtils.validateProperties(text);
-        text.setId(1);
 
+        // TODO: persistir
+        text.setId(1);
         return text;
     }
 
