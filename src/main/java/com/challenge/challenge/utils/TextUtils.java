@@ -2,10 +2,11 @@ package com.challenge.challenge.utils;
 
 import com.challenge.challenge.dtos.CreateTextDTO;
 import com.challenge.challenge.models.Text;
+import com.google.common.collect.ImmutableMap;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Map;
 
 public class TextUtils {
     private TextUtils() {}
@@ -41,7 +42,7 @@ public class TextUtils {
         }
     }
 
-    public static String encodeResult(HashMap<String, Integer> result) {
+    public static String flattenResult(Map<String, Integer> result) {
         StringBuilder sb = new StringBuilder();
         result.keySet().forEach(key -> {
             sb.append(String.format("%s-%s;", key, result.get(key)));
@@ -50,19 +51,14 @@ public class TextUtils {
         return sb.toString();
     }
 
-    public static HashMap<String, Integer> decodedResult(String result) {
-        return Arrays.stream(result.split(";")).reduce(
-                new HashMap<String, Integer>(),
-                (acc, curr) -> {
-                    String[] keySet = curr.split("-");
-                    acc.put(keySet[0], Integer.parseInt(keySet[1]));
+    public static Map<String, Integer> unflattenResult(String result) {
+        ImmutableMap.Builder builder = ImmutableMap.builder();
 
-                    return acc;
-                },
-                (acc1, acc2) -> {
-                    return acc1;
-                }
-        );
+        Arrays.stream(result.split(";")).forEach(key -> {
+            String[] keySet = key.split("-");
+            builder.put(keySet[0], Integer.parseInt(keySet[1]));
+        });
+        return builder.build();
     }
 
     public static String mergeLettersFromIndex(String text, int from, int to) {

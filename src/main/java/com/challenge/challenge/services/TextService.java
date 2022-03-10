@@ -4,6 +4,7 @@ import com.challenge.challenge.database.TextDAO;
 import com.challenge.challenge.dtos.CreateTextDTO;
 import com.challenge.challenge.models.Text;
 import com.challenge.challenge.utils.TextUtils;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,17 +35,15 @@ public class TextService {
         return result;
     }
 
-    private HashMap<String, Integer> reduceResult(List<String> syllables) {
-        return syllables.stream().reduce(
-          new HashMap<String, Integer>(),
-                (acc, key) -> {
-                    acc.put(key, acc.containsKey(key) ? acc.get(key) + 1 : 1);
-                    return acc;
-                },
-                (acc1, acc2) -> {
-                    return acc1;
-                }
-        );
+    private Map<String, Integer> reduceResult(List<String> syllables) {
+        HashMap<String, Integer> records = new HashMap<>();
+        ImmutableMap.Builder builder = ImmutableMap.builder();
+
+        syllables.forEach(key -> {
+            records.put(key, records.containsKey(key) ? records.get(key) + 1 : 1);
+            builder.put(key, records.get(key));
+        });
+        return builder.build();
     }
 
     public String getHash(CreateTextDTO dto) {
@@ -57,7 +56,7 @@ public class TextService {
 
         String hash = this.getHash(dto);
         List<String> syllables = this.splitIntoSyllables(normalizedText, totalChars);
-        HashMap<String, Integer> result = this.reduceResult(syllables);
+        Map<String, Integer> result = this.reduceResult(syllables);
         String normalizedResult = TextUtils.encodeResult(result);
 
         return new Text(hash, totalChars, normalizedResult);

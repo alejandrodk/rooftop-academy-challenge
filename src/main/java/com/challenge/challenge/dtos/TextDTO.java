@@ -22,6 +22,6 @@ public class TextDTO {
         this.id = text.getId();
         this.hash = text.getHash();
         this.chars = text.getChars();
-        this.result = TextUtils.decodedResult(text.getResult());
+        this.result = TextUtils.unflattenResult(text.getResult());
     }
 }
