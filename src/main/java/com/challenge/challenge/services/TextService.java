@@ -1,6 +1,6 @@
 package com.challenge.challenge.services;
 
-import com.challenge.challenge.database.TextDAO;
+import com.challenge.challenge.database.TextRepository;
 import com.challenge.challenge.dtos.CreateTextDTO;
 import com.challenge.challenge.models.Text;
 import com.challenge.challenge.utils.TextUtils;
@@ -16,7 +16,7 @@ import java.util.*;
 @Service
 public class TextService {
     @Autowired
-    TextDAO repository;
+    TextRepository repository;
 
     private List<String> splitIntoSyllables(String text, int charts) {
         if (TextUtils.charsExceedsText(text, charts)) return Collections.singletonList(text);

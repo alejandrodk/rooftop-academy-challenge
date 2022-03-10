@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @NoArgsConstructor
-public class TextDAO implements IText {
+public class TextRepository implements IText {
 
     @Autowired
     private JdbcTemplate template;
@@ -60,7 +60,8 @@ public class TextDAO implements IText {
                 text.isActive()
         );
 
-        template.execute(query);
+        Integer success = template.update(query);
+        if (success.equals(0)) throw new RuntimeException();
 
         String queryGet = String.format("SELECT * FROM TEXT WHERE hash='%s';", text.getHash());
         List<Text> result = template.query(queryGet, new BeanPropertyRowMapper<Text>(Text.class));
@@ -76,7 +77,8 @@ public class TextDAO implements IText {
                 id
         );
 
-        template.execute(query);
+        Integer success = template.update(query);
+        if (success.equals(0)) throw new RuntimeException();
 
         String queryGet = String.format("SELECT * FROM TEXT WHERE id=%s AND active=true;", id);
         List<Text> result = template.query(queryGet, new BeanPropertyRowMapper<Text>(Text.class));
