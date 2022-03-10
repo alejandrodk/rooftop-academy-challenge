@@ -8,6 +8,9 @@ import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.*;
 
 @Service
@@ -47,7 +50,21 @@ public class TextService {
     }
 
     public String getHash(CreateTextDTO dto) {
-        return UUID.randomUUID().toString();
+        try {
+            String raw = String.format("%s-%s", dto.getText(), dto.getChars());
+
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.reset();
+            md.update(raw.getBytes(StandardCharsets.UTF_8));
+            byte[] digest = md.digest();
+
+            BigInteger bigInt = new BigInteger(1, digest);
+            String hash = bigInt.toString(16);
+
+            return hash;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Text analyze(CreateTextDTO dto) {
@@ -57,7 +74,7 @@ public class TextService {
         String hash = this.getHash(dto);
         List<String> syllables = this.splitIntoSyllables(normalizedText, totalChars);
         Map<String, Integer> result = this.reduceResult(syllables);
-        String normalizedResult = TextUtils.encodeResult(result);
+        String normalizedResult = TextUtils.flattenResult(result);
 
         return new Text(hash, totalChars, normalizedResult);
     }
@@ -74,6 +91,7 @@ public class TextService {
     }
 
     public List<Text> list(Integer chars, Integer page, Integer rpp) {
+        // TODO: paginar
         return repository.list();
     }
 
