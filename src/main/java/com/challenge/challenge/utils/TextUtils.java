@@ -11,7 +11,7 @@ import java.util.Map;
 public class TextUtils {
     private TextUtils() {}
 
-    private static final int MIN_CHART_QUANTITY = 2;
+    public static final int MIN_CHART_QUANTITY = 2;
 
     public static String normalize(String text) {
         return text.toLowerCase();
@@ -35,8 +35,8 @@ public class TextUtils {
                 String key = field.getName();
                 Object value = field.get(text);
 
-                if (value == null) {
-                    throw new IllegalAccessException(String.format("Unable to process text, field %s has an invalid value", key));
+                if (value == null && !key.equals("id")) {
+                    throw new RuntimeException(String.format("Unable to process text, field %s has an invalid value", key));
                 }
             } catch (IllegalAccessException ignore) {}
         }
