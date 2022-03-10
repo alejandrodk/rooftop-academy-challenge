@@ -32,6 +32,6 @@ public class SeniorityBoostChallengeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		template.execute("DROP TABLE TEXT IF EXISTS");
-		template.execute("CREATE TABLE TEXT(id INTEGER(11) PRIMARY KEY auto_increment,hash VARCHAR(255),chars INTEGER,result VARCHAR,active BOOLEAN)");
+		template.execute("CREATE TABLE TEXT(id INTEGER(11) PRIMARY KEY auto_increment,hash VARCHAR(32),chars INTEGER(11),result VARCHAR,active BOOLEAN)");
 	}
 }

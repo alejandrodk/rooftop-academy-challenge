@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @NoArgsConstructor
@@ -18,9 +19,19 @@ public class TextDAO implements IText {
     private JdbcTemplate template;
 
     @Override
-    public List<Text> list() {
-        String query = "SELECT * FROM TEXT WHERE active=true";
-        return template.query(query, new BeanPropertyRowMapper<Text>(Text.class));
+    public List<Text> list(Optional<Integer> chars, Optional<Integer> page, Optional<Integer> rpp) {
+        Integer PAGE = page.orElse(1);
+        Integer ITEMS = Math.min(Math.max(rpp.orElse(10), 10), 100);
+        int OFFSET = (PAGE - 1) * ITEMS;
+
+        StringBuilder sb = new StringBuilder("SELECT * FROM TEXT WHERE active=true");
+
+        chars.ifPresent(value -> sb.append(String.format(" AND chars=%s", value)));
+
+        sb.append(String.format(" ORDER BY id LIMIT %s", ITEMS));
+        sb.append(String.format(" OFFSET %s;", OFFSET));
+
+        return template.query(sb.toString(), new BeanPropertyRowMapper<Text>(Text.class));
     }
 
     @Override

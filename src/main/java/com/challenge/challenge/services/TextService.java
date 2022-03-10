@@ -42,10 +42,9 @@ public class TextService {
         HashMap<String, Integer> records = new HashMap<>();
         ImmutableMap.Builder builder = ImmutableMap.builder();
 
-        syllables.forEach(key -> {
-            records.put(key, records.containsKey(key) ? records.get(key) + 1 : 1);
-            builder.put(key, records.get(key));
-        });
+        syllables.forEach(key -> records.put(key, records.containsKey(key) ? records.get(key) + 1 : 1));
+        records.forEach((key, value) -> builder.put(key, records.get(key)));
+
         return builder.build();
     }
 
@@ -90,9 +89,8 @@ public class TextService {
         return repository.get(id);
     }
 
-    public List<Text> list(Integer chars, Integer page, Integer rpp) {
-        // TODO: paginar
-        return repository.list();
+    public List<Text> list(Optional<Integer> chars, Optional<Integer> page, Optional<Integer> rpp) {
+        return repository.list(chars, page, rpp);
     }
 
     public boolean delete(int id) {

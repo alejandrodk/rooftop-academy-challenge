@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,7 +36,11 @@ public class Controller {
     }
 
     @GetMapping("text")
-    public ResponseEntity<Object> list(@RequestParam int chars, @RequestParam int page, @RequestParam int rpp) {
+    public ResponseEntity<Object> list(
+            @RequestParam Optional<Integer> chars,
+            @RequestParam Optional<Integer> page,
+            @RequestParam Optional<Integer> rpp
+    ) {
         try {
             List<Text> result = service.list(chars, page, rpp);
             List<TextDTO> dtos = result.stream().map(TextDTO::new).collect(Collectors.toList());
