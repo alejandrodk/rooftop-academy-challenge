@@ -6,6 +6,8 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,6 +55,25 @@ public class TextUtilsTest {
         } catch (Exception e) {
             Assertions.assertNotNull(e);
         }
+    }
+
+    @Test
+    public void ShouldSplitReceivedTextIntoSyllables() {
+        List<String> expected = Arrays.asList("te", "es", "st");
+
+        List<String> result = TextUtils.splitIntoSyllables("test", 2);
+
+        Assertions.assertEquals(expected, result);
+    }
+
+    @Test
+    public void ShouldConvertToMapKeepingItemsOrder() {
+        List<String> syllables = Arrays.asList("te", "es", "st");
+        Map<String, Integer> expected = ImmutableMap.of("te", 1, "es", 1, "st", 1);
+
+        Map<String, Integer> result = TextUtils.convertToMap(syllables);
+
+        Assertions.assertEquals(expected, result);
     }
 
     @Test
