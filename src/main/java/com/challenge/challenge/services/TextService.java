@@ -40,12 +40,18 @@ public class TextService {
 
     private Map<String, Integer> reduceResult(List<String> syllables) {
         HashMap<String, Integer> records = new HashMap<>();
-        ImmutableMap.Builder builder = ImmutableMap.builder();
+        List<String> orderKeys = new ArrayList<>();
+        // Use ImmutableMap to keep elements order
+        ImmutableMap.Builder ordered = ImmutableMap.builder();
 
-        syllables.forEach(key -> records.put(key, records.containsKey(key) ? records.get(key) + 1 : 1));
-        records.forEach((key, value) -> builder.put(key, records.get(key)));
+        syllables.forEach(key -> {
+            if (!records.containsKey(key)) orderKeys.add(key);
+            records.put(key, records.containsKey(key) ? records.get(key) + 1 : 1);
+        });
 
-        return builder.build();
+        orderKeys.forEach(key -> ordered.put(key, records.get(key)));
+
+        return ordered.build();
     }
 
     public String getHash(CreateTextDTO dto) {
