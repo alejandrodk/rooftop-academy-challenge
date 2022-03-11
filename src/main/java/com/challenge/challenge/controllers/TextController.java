@@ -1,4 +1,4 @@
-package com.challenge.challenge.integration;
+package com.challenge.challenge.controllers;
 
 import com.challenge.challenge.dtos.CreateResponseDTO;
 import com.challenge.challenge.dtos.CreateTextDTO;
