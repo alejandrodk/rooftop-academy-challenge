@@ -7,7 +7,7 @@ The text analyzer divides the sent text into the number of characters specified 
 - the minimum group has two characters.
 - if the number of characters exceeds the text sent, the analyzer will return all the text.
 
-[Full chanllenge description](https://docs.google.com/document/d/1IOor92V_W-HRqPFw6fhvh9O7tEBZ1Wry8Wj81Izcrrk/edit#heading=h.zh9kijrslsmq)
+[Full challenge description](https://docs.google.com/document/d/1IOor92V_W-HRqPFw6fhvh9O7tEBZ1Wry8Wj81Izcrrk/edit#heading=h.zh9kijrslsmq)
   
 ### Endpoints
 
