@@ -3,11 +3,13 @@ package com.challenge.challenge.dtos;
 import com.challenge.challenge.models.Text;
 import com.challenge.challenge.utils.TextUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Map;
 
 @Getter
+@AllArgsConstructor
 public class TextDTO {
     @JsonProperty
     private int id;

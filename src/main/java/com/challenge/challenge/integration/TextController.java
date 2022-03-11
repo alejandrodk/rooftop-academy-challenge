@@ -1,4 +1,4 @@
-package com.challenge.challenge.controllers;
+package com.challenge.challenge.integration;
 
 import com.challenge.challenge.dtos.CreateResponseDTO;
 import com.challenge.challenge.dtos.CreateTextDTO;
@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-public class Controller {
+public class TextController {
 
     @Autowired
     TextService service;
