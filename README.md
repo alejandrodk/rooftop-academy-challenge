@@ -57,16 +57,32 @@ The text analyzer divides the sent text into the number of characters specified 
 ```
 ### How to run project?
 
+##### Without Docker
+
 1- Create *.jar* file in target folder
 
 ```bash
-mvn clean install
+mvn clean package
 ```
 
 2- Execute .jar file created before
 
 ```bash
-java -jar ./target/javawebapp.jar
+java -jar ./target/challenge-fat-jar-boot.jar
+```
+
+3- Test api
+
+```bash
+GET: localhost:8080/ping
+```
+
+##### With Docker
+
+1- Run docker-compose
+
+```bash
+docker-compose up -d
 ```
 
 3- Test api
